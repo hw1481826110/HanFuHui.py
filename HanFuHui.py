@@ -80,7 +80,7 @@ def res_code(text): # 获取res加密数据
     #html = requests.post("https://www.hanfuhui.com/Home/Rsa?text=" +, ,  , data=json.dumps(data))
     html = requests.get("https://www.hanfuhui.com/Home/Rsa?text=" +text)
     print(html.text)
-    return (html.text)
+    return html.text
 
 def gettoken():
     url = "https://www.hanfuhui.com/Api/GetAppToken"
@@ -100,7 +100,7 @@ def gettoken():
     }
     response = requests.request("GET", url, data=payload, headers=headers)
     print(response.text)
-    return (response.text)
+    return response.text
 def gettoken_dengluhou(token):
     url = "https://www.hanfuhui.com/Api/GetAppToken"
     payload = ""
@@ -118,7 +118,7 @@ def gettoken_dengluhou(token):
     ck={"cookie_user_token":token}
     response = requests.request("GET", url, data=payload, headers=headers,cookies=ck)
     print(response.text)
-    return (response.text)
+    return response.text
 def login(user,password):#登录
 
     url = "https://api5.hanfuhui.com/Account/LoginForPhone"
