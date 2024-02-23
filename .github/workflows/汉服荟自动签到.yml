@@ -3,9 +3,9 @@ name:汉服荟自动签到
 on:
   push:
   # 定时任务，在每天的5点推送天气信息到邮箱
-  # schedule:
-  #   - cron: '43 11 * * *'
-  #   timeZone: 'Asia/Shanghai'
+  schedule:
+    - cron: '43 11 * * *'
+    timeZone: 'Asia/Shanghai'
 
 jobs:
   build-linux:
