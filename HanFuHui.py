@@ -193,6 +193,8 @@ def pushplus( title, content,token32="",token256=""):
 if __name__ == '__main__':
     #token=
     qiandao(login("13145487071","hw1481826110"))
+    # 提示用户按下任意键结束程序
+    # input("按下任意键结束程序...")
 
 
 
