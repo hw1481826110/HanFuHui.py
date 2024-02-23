@@ -8,8 +8,7 @@ import json
 import configparser
 import platform
 import os
-
-
+import html
 dengluhoutiken=""
 def write_config_file(token32,token256,data):
     
@@ -73,7 +72,7 @@ def qiandao(token):
     html = requests.post(url, headers=headers,  cookies=cookies, data=json.dumps(data))
     print(html.text)
     write_config_file(token,token256,html.text)
-    pushplus("汉服荟签到",html.text)   # gettoken_dengluhou(token)
+    pushplus("汉服荟签到",html.text,token,token256)   # gettoken_dengluhou(token)
     
 
 def res_code(text): # 获取res加密数据
@@ -152,14 +151,36 @@ def login(user,password):#登录
         print("false")
     return AccessTokenken
 
-def pushplus( title, content):
-    content = content.replace("\n", "\n\n")
+def pushplus( title, content,token32="",token256=""):
+    #content = content.replace("\n", "\n\n")
+    # 将 JSON 字符串转换为 Python 对象
+    html_token="<p>token32: "+token32+"</p ></br></br>"
+    html_token += "<p>token256: " + token256 + "</p >"
+    data=json.loads(content)
+    # 创建 HTML 表格
+    html_str = "<h4>"+data.get("ErrorMessage")+"""
+    </h4>
+    <table>
+      <tr>
+        <th>Key</th>
+        <th style="padding-left: 40px;">Value</th>
+      </tr>
+    """
+    # 遍历 JSON 对象
+    for key, value in data.items():
+        html_str += f"  <tr>\n    <td>{html.escape(key)}</td>\n    <td  style=\"padding-left: 40px;\">{html.escape(str(value))}</td>\n  </tr>\n"
+
+    html_str += """
+    </table>
+    """+html_token
+    print(data.get("ErrorMessage"))
+    print(html_str)
     payload = {
         'token': "3adb410539df4a9c8fe5d6c37f4edec8",
         "title": title,
-        "content": content,
+        "content": html_str,
         "channel": "wechat",
-        "template": "markdown"
+        "template": "html"
     }
     resp = requests.post("http://www.pushplus.plus/send", data=payload)
     resp_json = resp.json()
