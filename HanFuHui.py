@@ -73,8 +73,7 @@ def qiandao(token):
     html = requests.post(url, headers=headers,  cookies=cookies, data=json.dumps(data))
     print(html.text)
     write_config_file(token,token256,html.text)
-    
-   # gettoken_dengluhou(token)
+    pushplus("汉服荟签到",html.text)   # gettoken_dengluhou(token)
     
 
 def res_code(text): # 获取res加密数据
@@ -152,7 +151,24 @@ def login(user,password):#登录
     else:
         print("false")
     return AccessTokenken
-    
+
+def pushplus( title, content):
+    content = content.replace("\n", "\n\n")
+    payload = {
+        'token': "3adb410539df4a9c8fe5d6c37f4edec8",
+        "title": title,
+        "content": content,
+        "channel": "wechat",
+        "template": "markdown"
+    }
+    resp = requests.post("http://www.pushplus.plus/send", data=payload)
+    resp_json = resp.json()
+    if resp_json["code"] == 200:
+        print(f"[Pushplus]Send message to Pushplus successfully.")
+    if resp_json["code"] != 200:
+        print(f"[Pushplus][Send Message Response]{resp.text}")
+        return -1
+    return 0
 if __name__ == '__main__':
     #token=
     qiandao(login("13145487071","hw1481826110"))
