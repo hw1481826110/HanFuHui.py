@@ -22,16 +22,16 @@ def write_config_file(token32,token256,data):
     else:
         print("其他系统")
         raise NotImplementedError(f"Unsupported system: {system}")
+    if os.path.exists(filename):
+        config = configparser.ConfigParser()
+        config['汉服荟'] = {
+            'token32': token32,
+            'token256': token256,
+            'data': data
+        }
 
-    config = configparser.ConfigParser()
-    config['汉服荟'] = {
-        'token32': token32,
-        'token256': token256,
-        'data':data
-    }
-
-    with open(filename, 'w') as configfile:
-        config.write(configfile)
+        with open(filename, 'w') as configfile:
+            config.write(configfile)
 
 def qiandao(token):
     if token is not None:
