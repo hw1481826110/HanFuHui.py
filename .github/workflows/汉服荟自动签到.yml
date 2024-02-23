@@ -3,6 +3,7 @@ name:汉服荟自动签到
 on:
   schedule:
     - cron: '38 11 * * *'
+    timeZone: 'Asia/Shanghai'
 
 jobs:
   build-linux:
